@@ -1,1 +1,8 @@
-Compose file to run all unit tests in parallel. Will be launched on CI platform on each commit. 
+unit:
+  build: ../..
+  stdin_open: true
+  tty: true
+# Launch unit tests:  
+# command: -m unittest discover -s ./unit
+# Attach terminal to bash:
+  entrypoint: /bin/bash

@@ -64,8 +64,11 @@ UT:
    Unit test
    		- single process
 	   		- command line
+	   			python -m unittest discover -s ./tests/unit
 	   		- embedded in IDE
+	   			right click, use runner
    			- in docker container
+	 			docker run 1f75df94163d -m unittest discover -s ./unit
       	- debugger attached, breakpoints in test code or source code
    Integration tests
    		- single process

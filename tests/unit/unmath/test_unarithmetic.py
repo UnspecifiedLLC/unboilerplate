@@ -18,7 +18,10 @@ Created on Jan 16, 2018
 '''
 
 import unittest
+import unmath
+import unmath.unarithmetic
 from unmath.unarithmetic import Unarithmetic
+
 
 
 class TestUnarithmetic(unittest.TestCase):
