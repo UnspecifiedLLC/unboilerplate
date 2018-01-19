@@ -4,12 +4,14 @@ RUN pip install --require-hashes -r /tmp/requirements.txt
 ADD ./tests/test-requirements.txt /tmp/test-requirements.txt
 RUN pip install --require-hashes -r /tmp/test-requirements.txt
 
-ADD ./app/src /code
-ADD ./tests /tests
-# RUN find /code -name "*.pyc" -delete; /
-#	find /tests -name "*.pyc" -delete
+RUN mkdir /app
+VOLUME /app
+# ADD ./app/src /code
+RUN mkdir /tests
+VOLUME /tests
+# ADD ./tests /tests
 	 
-ENV PYTHONPATH $PYTHONPATH:/code:/tests
+ENV PYTHONPATH $PYTHONPATH:/app:/tests
 
 WORKDIR ./tests
 

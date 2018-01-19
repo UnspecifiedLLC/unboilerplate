@@ -1,41 +1,8 @@
-GREEN python command line: 
-PYTHONPATH=./app/src python3 -m unittest discover -s ./tests/
-sys.path contents:
-'/Users/thomasroper/development/eclipse-workspace/unboilerplate/tests'
-''
-'/Users/thomasroper/development/eclipse-workspace/unboilerplate/app/src'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python36.zip'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python3.6'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python3.6/lib-dynload'
-'/Users/thomasroper/.pyenv/versions/unboilerplate/lib/python3.6/site-packages'
-end sys.path contents
+from command line:
+~/unboilerplate: PYTHONPATH=./app/src python3 -m unittest discover -s ./tests/unit
 
-GREEN pydev, from /test/unit:
-Importing test modules ... sys.path contents:
-'/Users/thomasroper/.p2/pool/plugins/org.python.pydev_6.2.0.201711281614/pysrc'
-'/Users/thomasroper/development/eclipse-workspace/unboilerplate/tests'
-'/Users/thomasroper/development/eclipse-workspace/unboilerplate/app/src'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python3.6'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python3.6/lib-dynload'
-'/Users/thomasroper/.pyenv/versions/3.6.2/envs/unboilerplate/lib/python3.6/site-packages'
-'/Users/thomasroper/.pyenv/versions/3.6.2/lib/python36.zip'
-'/Users/thomasroper/development/eclipse-workspace/unboilerplate/tests/unit/unmath'
-end sys.path contents
+from docker compose: 
+docker-compose -f unit-compose.yml up
 
-RED docker:
-python3 -m unittest discover -s ./unit
-python3 -m unittest discover -s /tests/unit
-GREEN docker: 
-python3 -m unittest discover -s /tests/unit/unmath
-python3 -m unittest /tests/unit/unmath/test_unarithmetic.py 
 
-RED docker compose: 
-8 '/tests/unit'
-''
-2* '/tests'
-3* '/code'
-7 '/usr/lib/python36.zip'
-4 '/usr/lib/python3.6'
-5 '/usr/lib/python3.6/lib-dynload'
-~6,7 '/usr/local/lib/python3.6/dist-packages'
-~6,7 '/usr/lib/python3/dist-packages'
+ 
