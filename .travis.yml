@@ -1,0 +1,24 @@
+sudo: required
+
+services:
+  - docker
+  
+before_install:
+  - docker ps -a
+  
+jobs:
+  include:
+    - stage: pyunit tests
+      script: <run just unit tests>
+      script: <run just integration tests>
+    - stage: acceptance tests
+      script: <run just acceptance tests using local containers>
+    - stage: deploy to staging
+      script: skip 
+      deploy: <deploy to google cloud, only if master branch or pull request>
+    - stage: test staging
+      script: <run smoke tests that deploy is successful>
+    - stage: deploy to production
+      script: <update prod deploy in google cloud>
+    - stage: test production
+      script: <run smoke tests that deploy is successful>  
