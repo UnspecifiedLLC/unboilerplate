@@ -9,7 +9,7 @@ test_image:
 
 start_selenium:
 	docker network create -d bridge acceptance
-	docker run -itd --rm\
+	docker run -itd --rm \
 	--name=standalone-chrome-container \
 	--network=acceptance -p 4444 \
 	selenium/standalone-chrome:latest 
@@ -34,13 +34,15 @@ test_int:
 	$(subst __colon__,:,unspec-utility/unboilerplate_dev__colon__latest) \
 	-m unittest discover -s ./int
 
-test_acc: start_selenium
+test_acc:
 	docker run -it --rm \
 	--name dev_test_acc \
 	--network=acceptance \
+	--entrypoint behave \
 	--mount type=bind,source=$(realpath ./app/src),target=/app,readonly \
 	--mount type=bind,source=$(realpath ./tests),target=/tests,readonly \
 	$(subst __colon__,:,unspec-utility/unboilerplate_dev__colon__latest) \
-	--entrypoint behave 
+	/tests/acc/features
+	
 
 test_all: test_unit, test_int, test_acc

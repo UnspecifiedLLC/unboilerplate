@@ -21,18 +21,3 @@ from behave import *
 @given('I go to "{site}"')
 def step_impl(context, site):
 	context.browser.get(site)
-	
-@when(u'I fill in the search field with "{value}"')
-def step_impl(context, value):
-	text_field = find_field_by_class(world.browser, 'gsfi')
-	text_field.clear()
-	text_field.send_keys(value)
-	
-@then(u'I should see "{result}" in the search results within 2 seconds')
-def step_impl(context, result):
-	raise NotImplementedError(u'STEP: Then I should see "unspecified.life" in the search results within 2 seconds')
-
-def find_field_by_class(browser, attribute):
-    xpath = "//input[@class='%s']" % attribute
-    elems = browser.find_elements_by_xpath(xpath)
-    return elems[0] if elems else False
