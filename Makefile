@@ -11,7 +11,7 @@ start_selenium:
 	docker network create -d bridge acceptance
 	docker run -itd --rm \
 	--name=standalone-chrome-container \
-	--network=acceptance -p 4444 \
+	--network=acceptance -p 4444:4444 \
 	selenium/standalone-chrome:latest 
 
 end_selenium: 

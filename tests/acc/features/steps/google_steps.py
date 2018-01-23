@@ -20,7 +20,7 @@ from behave import *
 	
 @when(u'I fill in the search field with "{value}"')
 def step_impl(context, value):
-	text_field = find_field_by_class(world.browser, 'gsfi')
+	text_field = find_field_by_class(context.browser, 'gsfi')
 	text_field.clear()
 	text_field.send_keys(value)
 	
