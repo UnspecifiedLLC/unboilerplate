@@ -1,24 +1,10 @@
-unit:
-  build: .
-  command: -m unittest discover -s unit
-  volumes:
-   - ./app/src:/app
-   - ./tests:/tests
-   
-integration:
-  build: .
-  command: -m unittest discover -s int
-  volumes:
-   - ./app/src:/app
-   - ./tests:/tests
-   
 selenium-chrome: 
-    image: "selenium/standalone-chrome"
+    image: "selenium/standalone-chrome:latest"
     ports:
       - 4444:4444
      
 acceptance:
-  build: .
+  image: unspec-utility/unboilerplate_dev:latest
   command: -m unittest discover -s acc
   volumes:
    - ./app/src:/app

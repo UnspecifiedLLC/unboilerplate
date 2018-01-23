@@ -4,8 +4,11 @@ RUN pip install --require-hashes -r /tmp/requirements.txt
 ADD ./tests/test-requirements.txt /tmp/test-requirements.txt
 RUN pip install --require-hashes -r /tmp/test-requirements.txt
 
-ADD ./app/src /code
-ADD ./tests /tests
+RUN mkdir /app
+VOLUME /app
+
+RUN mkdir /tests
+VOLUME /tests
 	 
 ENV PYTHONPATH $PYTHONPATH:/app:/tests
 

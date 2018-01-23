@@ -4,5 +4,21 @@ from command line:
 from docker compose: 
 docker-compose -f unit-compose.yml up
 
+Debug a test under development:
+unit-compose
 
+Debug a test failing in CI, but not in unit-compose:
+   Start in Docker, override command to allow connecting a terminal
+   Start in docker, use Python remote debugging (TBD);
  
+Debug web app: 
+   Start app via dev-compose; connect via terminal / use server web console 
+
+Run tests using sauce labs:
+   TBD
+   
+Run tests in parallel, in random order:
+	TBD / nose
+	
+deploy app: 
+	TBD; /app/docker-compose, Google Cloud / K8s   
