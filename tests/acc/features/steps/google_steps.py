@@ -25,6 +25,6 @@ def step_impl(context, value):
 	text_field.clear()
 	text_field.send_keys(value, Keys.ENTER)
 	
-@then(u'I should see "{result}" as the first result')
+@then(u'I should see "{result}" as one of the first results')
 def step_impl(context, result):
 	assert len(context.browser.find_elements_by_link_text("Unspecified LLC")) > 0
