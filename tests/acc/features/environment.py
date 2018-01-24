@@ -24,14 +24,17 @@ from selenium.webdriver.common import desired_capabilities
 
 DOCKER_SELENIUM_URL = "http://standalone-chrome-container:4444/wd/hub"
 LOCAL_SELENIUM_URL = "http://0.0.0.0:4444/wd/hub"
-SELENIUM_URL = LOCAL_SELENIUM_URL
+SELENIUM_URL = DOCKER_SELENIUM_URL
+
+DEFAULT_WAIT_TIME_SECONDS = 10
 
 def before_all(context):
 #     context.thread = threading.Thread(target=context.server.serve_forever)
 #     context.thread.start()
 	capabilities = DesiredCapabilities.CHROME.copy()
 	context.browser = webdriver.Remote(desired_capabilities=capabilities,
-									command_executor=LOCAL_SELENIUM_URL)
+									command_executor=SELENIUM_URL)
+	context.browser.implicitly_wait(DEFAULT_WAIT_TIME_SECONDS)
 
 def after_all(context):
 #     context.thread.join()
