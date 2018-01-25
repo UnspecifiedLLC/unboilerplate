@@ -86,6 +86,6 @@ test-acc:
 	--mount type=bind,source=$(realpath ./app/src),target=/app,readonly \
 	--mount type=bind,source=$(realpath ./tests),target=/tests,readonly \
 	$(QNAME):$(TAG) \
-	/tests/acc/features
+	-D environment=docker /tests/acc/features
 	
 test-all: test-unit test-int test-acc

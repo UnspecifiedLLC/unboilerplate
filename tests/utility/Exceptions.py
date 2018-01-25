@@ -1,0 +1,2 @@
+class UnknownOptionException(Exception):
+    pass
