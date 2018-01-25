@@ -11,7 +11,6 @@ RUN mkdir /tests
 VOLUME /tests
 	 
 ENV PYTHONPATH $PYTHONPATH:/app:/tests
-ENV SELENIUM_URL http://standalone-chrome-container:4444/wd/hub 
 
 WORKDIR ./tests
 
