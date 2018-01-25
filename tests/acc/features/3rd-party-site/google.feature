@@ -6,5 +6,5 @@ Feature: Go to google
 	Scenario: Visit Google
 		Given I go to "http://www.google.com/"
 		When I fill in the search field with "unspecified.life"
-		Then I should see "Unspecified LLC" as the first result
+		Then I should see "Unspecified LLC" as one of the first results
 		
