@@ -17,14 +17,14 @@ Created on Jan 22, 2018
 	limitations under the License.
 '''
 import threading
+import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common import desired_capabilities
 
-DOCKER_SELENIUM_URL = "http://standalone-chrome-container:4444/wd/hub"
 LOCAL_SELENIUM_URL = "http://0.0.0.0:4444/wd/hub"
-SELENIUM_URL = DOCKER_SELENIUM_URL
+SELENIUM_URL = os.getenv("SELENIUM_URL", LOCAL_SELENIUM_URL)
 
 DEFAULT_WAIT_TIME_SECONDS = 10
 
