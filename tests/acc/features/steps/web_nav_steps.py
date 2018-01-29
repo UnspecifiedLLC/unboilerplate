@@ -17,7 +17,8 @@ Created on Jan 15, 2018
 	limitations under the License.
 '''
 from behave import * 
+from capybara.dsl import *
 
 @given('I go to "{site}"')
 def step_impl(context, site):
-	context.browser.get(site)
+    visit(site)
