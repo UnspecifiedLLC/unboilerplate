@@ -1,24 +1,33 @@
-sudo: required
+sudo: false
+# sudo: enabled
+language: generic
+
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
 
 services:
   - docker
+
+env:
+  global:
+     - TESTING_IMAGE_NAME=unboilerplate-testing
+     - REPO=us.gcr.io/unspec-utility
+     - TESTING_IMAGE_QNAME=$REPO/$TESTING_IMAGE_NAME
+     - TAG=${TRAVIS_COMMIT::6}
   
-before_install:
-  - docker ps -a
-  
-jobs:
-  include:
-    - stage: pyunit tests
-      script: <run just unit tests>
-      script: <run just integration tests>
-    - stage: acceptance tests
-      script: <run just acceptance tests using local containers>
-    - stage: deploy to staging
-      script: skip 
-      deploy: <deploy to google cloud, only if master branch or pull request>
-    - stage: test staging
-      script: <run smoke tests that deploy is successful>
-    - stage: deploy to production
-      script: <update prod deploy in google cloud>
-    - stage: test production
-      script: <run smoke tests that deploy is successful>  
+install:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update docker-credential-gcr
+  - docker-credential-gcr configure-docker
+    
+script: 
+  - gcloud auth activate-service-account --key-file=<(base64 --decode <<< ${GCR_SERVICE_KEY})
+  - docker build -t $TESTING_IMAGE_QNAME:$TAG -f tests/Dockerfile .
+  - docker tag $TESTING_IMAGE_QNAME:$TAG $TESTING_IMAGE_QNAME:$TRAVIS_BRANCH
+  - docker tag $TESTING_IMAGE_QNAME:$TAG $TESTING_IMAGE_QNAME:travis-${TRAVIS_BUILD_NUMBER}
+  - gcloud docker -- push $TESTING_IMAGE_QNAME
+ 
