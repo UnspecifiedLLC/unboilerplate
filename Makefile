@@ -4,7 +4,6 @@ QNAME:=$(REPO)/$(IMAGE)
 TAG?=DEV
 BRANCH?=LOCAL
 BUILD_NUMBER?=0
-SELENIUM_URL=http://standalone-chrome-container:4444/wd/hub
 
 define ANNOUNCE_BODY
 	Hello $(USER) 
@@ -81,7 +80,6 @@ test-acc:
 	docker run -it --rm \
 	--name $(IMAGE)_acceptance \
 	--network=acceptance \
-	--env SELENIUM_URL="http://standalone-chrome-container:4444/wd/hub" \
 	--entrypoint behave \
 	--mount type=bind,source=$(realpath ./app/src),target=/app,readonly \
 	--mount type=bind,source=$(realpath ./tests),target=/tests,readonly \
