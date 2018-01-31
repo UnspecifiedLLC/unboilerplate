@@ -22,6 +22,7 @@ from utility.Exceptions import UnknownOptionException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 DEFAULT_WAIT_TIME_SECONDS = 10
+SELENIUM_URL = None
 
 def get_url(context):
 	userData = context.config.userdata
@@ -33,6 +34,7 @@ def get_url(context):
 	else:
 		raise UnknownOptionException("Unknown environment: '%s', Please use either 'docker' or 'default'"
 									 % (env))
+
 @capybara.register_driver("selenium_remote_chrome")
 def init_selenium_chrome_driver(app):
     from selenium.webdriver.chrome.options import Options
@@ -49,8 +51,10 @@ def init_selenium_chrome_driver(app):
     return Driver(app,
                   browser="remote",
                   desired_capabilities=DesiredCapabilities.CHROME,
-                  command_executor=get_url(capybara.context))
+                  command_executor=SELENIUM_URL)
 
 def before_all(context):
+    global SELENIUM_URL
+    SELENIUM_URL = get_url(context)
     capybara.current_driver = "selenium_remote_chrome"
     capybara.default_max_wait_time = DEFAULT_WAIT_TIME_SECONDS
