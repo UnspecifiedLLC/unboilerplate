@@ -16,14 +16,13 @@ Created on Jan 22, 2018
 	See the License for the specific language governing permissions and
 	limitations under the License.
 '''
-import threading
+import os
+import capybara
 from utility.Exceptions import UnknownOptionException
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium.webdriver.common import desired_capabilities
 
 DEFAULT_WAIT_TIME_SECONDS = 10
+SELENIUM_URL = None
 
 def get_url(context):
 	userData = context.config.userdata
@@ -36,17 +35,26 @@ def get_url(context):
 		raise UnknownOptionException("Unknown environment: '%s', Please use either 'docker' or 'default'"
 									 % (env))
 
+@capybara.register_driver("selenium_remote_chrome")
+def init_selenium_chrome_driver(app):
+    from selenium.webdriver.chrome.options import Options
+
+    from capybara.selenium.driver import Driver
+
+    capybara.app = app
+    capybara.default_driver = 'selenium'
+
+    chrome_options = Options()
+    if os.environ.get("HEADLESS"):
+        chrome_options.add_argument("--headless")
+
+    return Driver(app,
+                  browser="remote",
+                  desired_capabilities=DesiredCapabilities.CHROME,
+                  command_executor=SELENIUM_URL)
+
 def before_all(context):
-#     context.thread = threading.Thread(target=context.server.serve_forever)
-#     context.thread.start()
-	capabilities = DesiredCapabilities.CHROME.copy()
-	context.browser = webdriver.Remote(desired_capabilities=capabilities,
-									command_executor=get_url(context))
-	context.browser.implicitly_wait(DEFAULT_WAIT_TIME_SECONDS)
-
-def after_all(context):
-#     context.thread.join()
-    context.browser.quit()
-
-def before_feature(context, feature):
-    pass
+    global SELENIUM_URL
+    SELENIUM_URL = get_url(context)
+    capybara.current_driver = "selenium_remote_chrome"
+    capybara.default_max_wait_time = DEFAULT_WAIT_TIME_SECONDS

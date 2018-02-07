@@ -17,14 +17,13 @@ Created on Jan 15, 2018
 	limitations under the License.
 '''
 from behave import * 
+from capybara.dsl import *
 from selenium.webdriver.common.keys import Keys
 
 @when(u'I fill in the search field with "{value}"')
 def step_impl(context, value):
-	text_field = context.browser.find_element_by_id("lst-ib")
-	text_field.clear()
-	text_field.send_keys(value, Keys.ENTER)
-	
+    fill_in("lst-ib", value=value + Keys.ENTER)
+
 @then(u'I should see "{result}" as one of the first results')
 def step_impl(context, result):
-	assert len(context.browser.find_elements_by_link_text("Unspecified LLC")) > 0
+    assert has_link("Unspecified LLC")
